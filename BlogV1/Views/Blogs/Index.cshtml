@@ -5,13 +5,17 @@
         <div class="article">
             <h2><span>@item.Name</span></h2>
             <div class="clr"></div>
-            <p><span class="date">@item.PublishDate</span> Posted by <a href="#">Owner</a> &nbsp;|&nbsp; Filed under <a href="#">@item.Tags</a>, <a href="#">internet</a></p>
+            <p><span class="date">@item.PublishDate.ToString("dd/MM/yyyy HH:mm")</span> Posted by <a href="#">Owner</a> &nbsp;|&nbsp; Filed under <a href="#">@item.Tags</a>, <a href="#">internet</a></p>
             <img src=@item.ImageUrl width="625" height="205" alt="" />
-            <p>@item.Description</p>
-            <p class="spec"><a href="#" class="rm">Read more &raquo;</a>
-                <a href="#" class="com"><span>@item.CommentCount</span> Comments</a>
-                <a href="#" class="com"><span>@item.LikeCount</span> Likes</a>
-                <a href="#" class="com"><span>@item.ViewCount</span> Views</a>
+            @{
+                string description = item.Description;
+                string newDescription = description.Length > 50 ? description.Substring(0, 250) + "..." : description;
+            }
+            <p>@newDescription</p>
+            <p class="spec"><a href="/Blogs/Details?id=@item.Id" class="rm">Read more &raquo;</a>
+                <a href="#" class="com" style="margin-left:5px"><span>@item.CommentCount</span> Comments</a>
+                <a href="#" class="com" style="margin-left:5px"><span>@item.LikeCount</span> Likes</a>
+                <a href="#" class="com" style="margin-left:5px"><span>@item.ViewCount</span> Views</a>
             </p>
         </div>
     }

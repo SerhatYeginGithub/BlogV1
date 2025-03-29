@@ -1,0 +1,56 @@
+﻿@model Blog
+<div class="mainbar">
+    <div class="article">
+        <h2><span>@Model.Name</span></h2>
+        <div class="clr"></div>
+        <p>Posted by <a href="#">Owner</a> <span>&nbsp;&bull;&nbsp;</span> Filed under <a href="#">templates</a>, <a href="#">internet</a></p>
+        <p>@Model.Description</p>
+        <p>Tagged: <a href="#">@Model.Tags</a></p>
+        <p><a href="#"><strong>Comments (@Model.CommentCount)</strong></a> <span>&nbsp;&bull;&nbsp;</span> @Model.PublishDate.ToString("dd/MM/yyyy HH:mm") <span>&nbsp;&bull;&nbsp;</span></p>
+    </div>
+    <div class="article">
+        <h2><span>3</span> Yorumlar</h2>
+        <div class="clr"></div>
+
+        @foreach (var item in ViewBag.Comments) {
+
+        <div class="comment">
+            <a href="#"><img src="/images/userpic.gif" width="40" height="40" alt="" class="userpic" /></a>
+            <p>
+                <a href="#">@item.Name</a> Says:<br />
+                @item.PublishDate
+            </p>
+            <p>@item.Message</p>
+        </div>
+        }
+    </div>
+    <div class="article">
+        <h2><span>Leave a</span> Reply</h2>
+        <div class="clr"></div>
+        <form action="/Blogs/CreateComment" method="post" id="leavereply">
+            <ol>
+                <input id="blogId" name="blogId" type="hidden" value="@Model.Id" />
+                <li>
+                    <label for="name">Name (required)</label>
+                    <input id="name" name="name" class="text" />
+                </li>
+                <li>
+                    <label for="email">Email Address (required)</label>
+                    <input id="email" name="email" class="text" />
+                </li>
+                <li>
+                    <label for="website">Website</label>
+                    <input id="website" name="website" class="text" />
+                </li>
+                <li>
+                    <label for="message">Your Message</label>
+                    <textarea id="message" name="message" rows="8" cols="50"></textarea>
+                </li>
+                <li>
+                    <input type="image" name="imageField" id="imageField" src="/images/submit.gif" class="send" />
+                    <div class="clr"></div>
+                </li>
+            </ol>
+        </form>
+    </div>
+</div>
