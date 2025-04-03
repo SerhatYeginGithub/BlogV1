@@ -1,5 +1,8 @@
 ﻿using BlogV1.Context;
+using BlogV1.Identity;
 using BlogV1.Models;
+using BlogV1.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogV1.Controllers
@@ -7,10 +10,13 @@ namespace BlogV1.Controllers
     public class BlogsController : Controller
     {
         private readonly BlogDbContext _context;
-
-        public BlogsController(BlogDbContext context) 
+        private readonly UserManager<BlogIdentityUser> _userManager;
+        private readonly SignInManager<BlogIdentityUser> _signInManager;
+        public BlogsController(BlogDbContext context, SignInManager<BlogIdentityUser> signInManager, UserManager<BlogIdentityUser> userManager)
         {
             _context = context;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -53,6 +59,17 @@ namespace BlogV1.Controllers
         public IActionResult Support()
         {
             return View();  
+        }
+
+        [HttpPost]
+        
+        public IActionResult CreateContact(Contact model)
+        {
+            model.CreatedAt = DateTime.Now;
+            _context.Add(model);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
